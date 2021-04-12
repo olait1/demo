@@ -65,6 +65,10 @@ transform: translateY(-70%);
 form input:focus + label::after{
     transform: translateX(0%);
 }
+#canva{
+    border: 1px solid #222;
+    background: #333;
+}
 </style>
 <body>
     <form action="">
@@ -72,10 +76,31 @@ form input:focus + label::after{
 <label for="name"><span class="content-name">Name</span></label>
 
     </form>
+    <canvas id="canva" height="200px" width="200px">
+
+    </canvas>
+
 </body>
 </html>
 <script>
-   
+var canva=document.getElementById("canva");
+var draw=canva.getContext("2d");
 
- alert(navigator.onLine);
+var radius=canva.height/2;
+var start=radius;
+let end=radius;
+var v=0;
+var grad;
+ draw.beginPath();
+ draw.arc(start,end,radius,v,Math.PI * 2);
+ draw.fillStyle="white";
+ draw.fill();
+ draw.beginPath();
+ draw.arc(start,end,radius,Math.PI);
+ grad=draw.createRadialGradient(0,0,radius,200,0,radius);
+ grad.addColorStop(0,"#333");
+ grad.addColorStop(0.3,"#fff");
+ grad.addColorStop(1,"#333");
+ draw.fillStyle=grad;
+ draw.stroke()
 </script>

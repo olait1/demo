@@ -423,6 +423,7 @@ background: #f2f2f2;
       font: 100px;
   }
 </style>
+
 <body class="body">
     <div id="body" >
     <div class="navbar">
@@ -609,7 +610,9 @@ background: #f2f2f2;
             </div>
      
             <!-- cart -->
+          
             <table id="table">
+            <form action="" method="post">
                 <tr>
                     <th>Product </th>
                  <th>Quantity  </th>
@@ -619,13 +622,39 @@ background: #f2f2f2;
              </tr>
              <tr>
                      <td><img id='cimg' class="cimg" alt="" srcset=""> </td>
-                  <td><input type="number" onchange="change()" min="0"  name="" class="quantity" id="quantity"> </td>
-                  <td id="amounts">  </td>
-                  <td class="prices" id="prices"> </td>
+                  <td><input type="number" onchange="change()" min="0"  name="quantity" class="quantity" id="quantity"> </td>
+                  <td id="amounts" name="amount">  </td>
+                  <td class="prices" id="prices" name="prices"> </td>
                   <td><label for="remove">remove</label> <input type="checkbox" name="remove" id=""> </td>
               </tr>
+             <tr> <td> <input type="submit" name="submitData" value="submit">
+             </td></tr></form>
             </table>
+          
+            
 </body>
+<?php
+$conn=mysqli_connect("localhost","root","","jeanscollection");
+if(!$conn){
+    die("connection failed".mysqli_connect_error());
+}else{
+    echo"<script>alert('connect')</script>";
+}
+$qnty=$_POST['quantity'];
+$amount=$_POST['amount'];
+$prices=$_POST['prices'];
+$sub=$_POST['submitData'];
+
+if(!isset($query)){
+    if(isset($sub)){
+        $sql="INSERT INTO cart(quantity,amount,totalPrice) VALUES($qnty,$amount,$prices) ";
+        $query=mysqli_query($conn,$sql);
+        
+        }
+}else{
+    echo"none";
+}
+?>
 <script>
     var price=document.getElementsByClassName("price");
     var quantity=document.getElementById("quantity");
@@ -705,7 +734,6 @@ totalPrice=a * b;
    }else if (totalPrice =" ") {
     prices.innerHTML="invalid input";
     prices.style.color="red";
- 
 }
    }
 </script>
