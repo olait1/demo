@@ -382,8 +382,47 @@ cursor: pointer;
     }
 }
 
-</style>
+/* cart */
+table{
+      border-collapse: collapse;
+      border-spacing: 0;
+      width: 50%;
+      position: fixed!important;
+top: 10vh;
+left: 30vw;
+      display: none;
+      border: 1px solid #ddd;
+      overflow: auto;
+    }
+    @media screen and (max-width: 600px) {
+        table{
+           left: 0;
+           width: 100%;
+overflow: auto;
+        }
+    }
+    th,td{
+text-align:right;
+padding: 16px;
+    }
+    tr:nth-child(even){
+background: #f2f2f2;
 
+    }
+    .cimg{
+        width: 100px;
+        height: 100px;
+    }
+  .search-input{
+      position: relative;
+  }
+  .search{
+      position: absolute;
+      top: 0;
+      left: 0;
+      font: 100px;
+  }
+</style>
 <body class="body">
     <div id="body" >
     <div class="navbar">
@@ -560,20 +599,122 @@ cursor: pointer;
     </div>
     </div>
   
-
-          
-          
-            
+    <div id="bg" class="fullscr">
+        <div class="imgitem">
+                <h1 class="close" id="clos">&times;</h1>
+            <h1><i class=" fa fa-cart-arrow-down "   id="cat"></i>
+            </h1>
+    </div>
+        <img id="bimg" src="" alt="" srcset="">
+            </div>
+     
+            <!-- cart -->
+            <table id="table">
+                <tr>
+                    <th>Product </th>
+                 <th>Quantity  </th>
+                 <th>Amount  </th>
+                 <th>Total Price </th>
+                 <th>Cart </th>
+             </tr>
+             <tr>
+                     <td><img id='cimg' class="cimg" alt="" srcset=""> </td>
+                  <td><input type="number" onchange="change()" min="0"  name="" class="quantity" id="quantity"> </td>
+                  <td id="amounts">  </td>
+                  <td class="prices" id="prices"> </td>
+                  <td><label for="remove">remove</label> <input type="checkbox" name="remove" id=""> </td>
+              </tr>
+            </table>
 </body>
-
 <script>
-var jeans=document.getElementsByClassName("jeans");
-for (let index = 0; index < jeans.length; index++) {
- jeans[index].onmouseOver=function(){
-   
-    alert(index);
- }
-    
+    var price=document.getElementsByClassName("price");
+    var quantity=document.getElementById("quantity");
+    var prices=document.getElementById("prices");
+var amount=document.getElementsByClassName("amounts");
+var drop=document.getElementById("btn");
+var dropdown=document.getElementById("dropdown");
+var icon=document.getElementById("icon");
+var sidenav=document.getElementById("sidenav");
+var logo=document.getElementById("logo");
+var clos=document.getElementById("close");
+var news=document.getElementById("news");
+var modal=document.getElementById("modal");
+var modalClose=document.getElementById("modal-close");
+var cloth= document.getElementsByClassName("cloth");
+var body=document.getElementById("body");
+var img=document.getElementsByClassName("jeans");
+var bg=document.getElementById("bg");
+var bimg=document.getElementById("bimg");
+var clo=document.getElementById("clos");
+var cat=document.getElementById("cat");
+var cart=document.getElementById("cart");
+var cloths=[...cloth];
+var table=document.getElementById("table");
+var cimg=document.getElementById("cimg");
+var rimg;
+let imgIndex=[];
+
+drop.onclick=function(){
+dropdown.classList.toggle("show");
 }
+icon.onclick=function(){
+    sidenav.style.display="block";
+}
+clos.onclick=function(){
+    sidenav.style.display="none";
+}
+news.onclick=function(){
+   modal.style.display="block";
+   modalClose.onclick=function(){
+       modal.style.display="none";
+   }
+}
+for (let index = 0; index < cloths.length; index++) {
+   cloths[index].onclick=function(){
+    bg.style.display='block';
+     body.classList.add('all');
+    imgsrc = img[index].getAttribute('src');
+    bimg.setAttribute('src',imgsrc);
+    price=price[index].textContent;
+    cat.onclick=function(){
+imgIndex.push(1);
+let red=imgIndex.reduce(function(x){
+return x+1;
+},0);
+console.log(red);
+    }
+   }
+}
+clo.onclick=function(){
+    bg.style.display='none';
+    body.classList.remove('all');
+}
+cart.onclick=function(){ 
+table.style.display="block";
+bg.style.display='none';
+body.classList.add('all');
+cimg.setAttribute('src',imgsrc);
+amounts.innerHTML=price;
+
+}
+quantity.onkeyup=function(){
+   change();
+}
+   function change(){
+    pric=price.substring(1);
+a=parseFloat(pric);
+c= quantity.value;
+b=parseInt(c);
+totalPrice=a * b;
+
+ if(isFinite(totalPrice)){
+    prices.innerHTML="$"+totalPrice.toFixed(2);
+    prices.style.color="#222";
+   }else if (totalPrice =" ") {
+    prices.innerHTML="invalid input";
+    prices.style.color="red";
+ 
+}
+   }
 </script>
 </html>
